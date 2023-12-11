@@ -1,17 +1,18 @@
-package attributes; 
+package attributes;
 
 import interfaces.Attribute;
 
 public class HungerAttribute implements Attribute {
-    private int value; 
+    private int value;
 
     public HungerAttribute() {
-        this.value = 0; 
+        this.value = 0;
     }
 
     @Override
     public void incrementValue() {
         value++;
+        // Add logic here to cap the value at a maximum if needed
     }
 
     @Override
@@ -23,7 +24,16 @@ public class HungerAttribute implements Attribute {
 
     @Override
     public String getValue(Integer key) {
-        return "Custom logic to get hunger value description";
+        switch (value) {
+            case 0:
+                return "Not Hungry";
+            case 1:
+                return "A little Hungry";
+            case 2:
+                return "Very Hungry";
+            default:
+                return "Unknown"; // Or handle other cases as needed
+        }
     }
 
     @Override
