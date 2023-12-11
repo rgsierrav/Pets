@@ -3,22 +3,31 @@ import java.util.*;
 import enums.Color;
 import interfaces.Attribute;
 import interfaces.Pet;
+import pets.Cat;
+import pets.Dog;
 
-class Owner {
-    // You can add owner-specific logic here
+public static void main(String[] args) {
+    Owner owner = new Owner();
+    // Load or initialize owner's pets
+    // Interact with owner's pets
 }
+
 
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Pet pet = choosePet();
+        Pet pet = loadState();
+        if (pet == null) {
+            pet = choosePet();
+        }
         if (pet == null) {
             System.out.println("Exiting program.");
             return;
         }
 
         interactWithPet(pet);
+        saveState(pet);
     }
 
     private static Pet choosePet() {
@@ -99,6 +108,22 @@ public class Main {
             default:
                 System.out.println("Invalid choice. Please choose a valid option.");
                 return true;
+        }
+    }
+    private static void saveState(Pet pet) {
+            try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("pet_state.ser"))) {
+                out.writeObject(pet);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    private static Pet loadState() {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("pet_state.ser"))) {
+            return (Pet) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("No saved state found. Starting with a new pet.");
+            return null;
         }
     }
 }
