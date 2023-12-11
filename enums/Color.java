@@ -1,5 +1,8 @@
-package enums; 
+package enums;
 
+/**
+ * Enum representing various colors.
+ */
 public enum Color {
     RED,
     GREEN,
