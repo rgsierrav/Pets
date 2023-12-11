@@ -9,28 +9,44 @@ class Owner {
 }
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
 
+    public static void main(String[] args) {
+        Pet pet = choosePet();
+        if (pet == null) {
+            System.out.println("Exiting program.");
+            return;
+        }
+
+        interactWithPet(pet);
+    }
+
+    private static Pet choosePet() {
         System.out.println("Choose a Pet to interact with:");
         System.out.println("1- Cat");
         System.out.println("2- Dog");
 
-        int petChoice = scanner.nextInt();
-        scanner.nextLine(); 
+        try {
+            int petChoice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
 
-        Pet pet = null;
-
-        if (petChoice == 1) {
-            pet = new Cat();
-        } else if (petChoice == 2) {
-            pet = new Dog();
-        } else {
-            System.out.println("Invalid choice.");
-            scanner.close();
-            return;
+            switch (petChoice) {
+                case 1:
+                    return new Cat();
+                case 2:
+                    return new Dog();
+                default:
+                    System.out.println("Invalid choice.");
+                    return null;
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a number.");
+            scanner.nextLine(); // Consume the invalid input
+            return null;
         }
+    }
 
+    private static void interactWithPet(Pet pet) {
         while (true) {
             System.out.println("\nChoose from the following:");
             System.out.println("1- Play");
@@ -41,37 +57,48 @@ public class Main {
             System.out.println("6- View happiness value");
             System.out.println("7- Quit");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); 
+            try {
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character
 
-            switch (choice) {
-                case 1:
-                    pet.play();
+                if (!processPetInteraction(pet, choice)) {
                     break;
-                case 2:
-                    pet.feed();
-                    break;
-                case 3:
-                    pet.makeSound();
-                    break;
-                case 4:
-                    System.out.println("Color: " + pet.getColor());
-                    break;
-                case 5:
-                    Attribute attribute1 = pet.getAttribute1();
-                    System.out.println("Hunger value: " + attribute1.getCurrentValue());
-                    break;
-                case 6:
-                    Attribute attribute2 = pet.getAttribute2();
-                    System.out.println("Happiness value: " + attribute2.getCurrentValue());
-                    break;
-                case 7:
-                    scanner.close();
-                    return;
-                default:
-                    System.out.println("Invalid choice. Please choose a valid option.");
-                    break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // Consume the invalid input
             }
+        }
+    }
+
+    private static boolean processPetInteraction(Pet pet, int choice) {
+        switch (choice) {
+            case 1:
+                pet.play();
+                return true;
+            case 2:
+                pet.feed();
+                return true;
+            case 3:
+                pet.makeSound();
+                return true;
+            case 4:
+                System.out.println("Color: " + pet.getColor());
+                return true;
+            case 5:
+                Attribute attribute1 = pet.getAttribute1();
+                System.out.println("Hunger value: " + attribute1.getCurrentValue());
+                return true;
+            case 6:
+                Attribute attribute2 = pet.getAttribute2();
+                System.out.println("Happiness value: " + attribute2.getCurrentValue());
+                return true;
+            case 7:
+                scanner.close();
+                return false;
+            default:
+                System.out.println("Invalid choice. Please choose a valid option.");
+                return true;
         }
     }
 }
