@@ -1,4 +1,4 @@
-package interfaces; // Ensure you have the correct package declaration
+package interfaces; 
 
 public interface Attribute {
     void incrementValue();

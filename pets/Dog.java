@@ -1,51 +1,46 @@
-package pets; // Ensure you have the correct package declaration
+package pets; 
 
 import enums.Color;
 import interfaces.Attribute;
 import interfaces.Pet;
 
 public class Dog implements Pet {
-    private int happiness; // You can initialize this to some default value
-    private int hunger;    // You can initialize this to some default value
-    private Color color;   // You can initialize this to some default value
+    private int happiness; 
+    private int hunger;    
+    private Color color;   
 
-    // Constructor for Dog
     public Dog() {
-        this.happiness = 0; // Initialize happiness to a default value
-        this.hunger = 0;    // Initialize hunger to a default value
-        this.color = Color.GRAY; // Initialize color to a default value
+        this.happiness = 0; 
+        this.hunger = 0;    
+        this.color = Color.GRAY; 
     }
 
     @Override
     public void play() {
         System.out.println("The dog is playing.");
-        // Implement logic to increase happiness and hunger here
+        happiness++;
+        hunger++;
     }
 
     @Override
     public void feed() {
         System.out.println("The dog is being fed.");
-        // Implement logic to decrease hunger here
+        hunger--;
     }
 
     @Override
     public void makeSound() {
         System.out.println("Woof!");
-        // Implement logic for the dog's sound here
     }
 
     @Override
     public Attribute getAttribute1() {
-        // Implement logic to return an attribute
-        // For example: return new HappinessAttribute();
-        return null;
+        return new HappinessAttribute();
     }
 
     @Override
     public Attribute getAttribute2() {
-        // Implement logic to return another attribute
-        // For example: return new HungerAttribute();
-        return null;
+        return new HungerAttribute();
     }
 
     @Override

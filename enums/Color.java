@@ -1,4 +1,4 @@
-package enums; // Ensure you have the correct package declaration
+package enums; 
 
 public enum Color {
     RED,

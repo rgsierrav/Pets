@@ -1,4 +1,4 @@
-package interfaces; // Ensure you have the correct package declaration
+package interfaces; 
 
 import enums.Color;
 import interfaces.Attribute;

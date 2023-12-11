@@ -2,14 +2,17 @@ JAVAC = javac
 JAR = jar
 MAIN_CLASS = Main
 
+# List of source files
+SRC_FILES = enums/*.java interfaces/*.java attributes/*.java pets/*.java Main.java
+
 all:
-    $(JAVAC) -d . src/enums/*.java src/interfaces/*.java src/attributes/*.java src/pets/*.java src/Main.java
+	$(JAVAC) -d . $(SRC_FILES)
 
 run:
-    java -cp . $(MAIN_CLASS)
+	java -cp . $(MAIN_CLASS)
 
 clean:
-    find . -name "*.class" -type f -delete
+	find . -name "*.class" -type f -delete
 
 jar:
-    $(JAR) cfe my-pets.jar $(MAIN_CLASS) .
+	$(JAR) cfe my-pets.jar $(MAIN_CLASS) .
