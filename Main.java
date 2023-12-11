@@ -1,34 +1,36 @@
 import java.io.*;
 import java.util.*;
-import enums.Color;
 import interfaces.Attribute;
 import interfaces.Pet;
 import pets.Cat;
 import pets.Dog;
 
-public static void main(String[] args) {
-    Owner owner = new Owner();
-    // Load or initialize owner's pets
-    // Interact with owner's pets
-}
-
-
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Pet pet = loadState();
-        if (pet == null) {
-            pet = choosePet();
+        Owner owner = loadState();
+        if (owner == null) {
+            owner = new Owner();
         }
-        if (pet == null) {
-            System.out.println("Exiting program.");
-            return;
+    
+        System.out.println("Enter the name of your new pet:");
+        String petName = scanner.nextLine();
+        Pet newPet = choosePet();
+        if (newPet != null) {
+            owner.addPet(petName, newPet);
         }
-
-        interactWithPet(pet);
-        saveState(pet);
-    }
+    
+        System.out.println("Which pet would you like to interact with?");
+        owner.listPets();
+        String selectedPetName = scanner.nextLine();
+        Pet petToInteract = owner.getPet(selectedPetName);
+        if (petToInteract != null) {
+            interactWithPet(petToInteract);
+        }
+    
+        saveState(owner);
+    }    
 
     private static Pet choosePet() {
         System.out.println("Choose a Pet to interact with:");
@@ -110,20 +112,21 @@ public class Main {
                 return true;
         }
     }
-    private static void saveState(Pet pet) {
-            try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("pet_state.ser"))) {
-                out.writeObject(pet);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-    private static Pet loadState() {
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("pet_state.ser"))) {
-            return (Pet) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("No saved state found. Starting with a new pet.");
-            return null;
+    
+    private static void saveState(Owner owner) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("owner_state.ser"))) {
+            out.writeObject(owner);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+    
+    private static Owner loadState() {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("owner_state.ser"))) {
+            return (Owner) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("No saved state found. Starting with a new owner.");
+            return null;
+        }
+    }    
 }
