@@ -24,6 +24,8 @@ public class Cat implements Pet, Serializable { // Implement Serializable
         System.out.println("The cat is playing.");
         happiness.incrementValue();
         hunger.incrementValue();
+        System.out.println("Happiness level increased");
+        System.out.println("Hunger level increased");
     }
 
     @Override

@@ -69,16 +69,11 @@ public class Main {
             System.out.println("6- View happiness value");
             System.out.println("7- Quit");
 
-            try {
-                int choice = scanner.nextInt();
-                scanner.nextLine(); // Consume the newline character
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
 
-                if (!processPetInteraction(pet, choice)) {
-                    break;
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a number.");
-                scanner.nextLine(); // Consume the invalid input
+            if (!processPetInteraction(pet, choice)) {
+                break;
             }
         }
     }
@@ -87,31 +82,33 @@ public class Main {
         switch (choice) {
             case 1:
                 pet.play();
-                return true;
+                break;
             case 2:
                 pet.feed();
-                return true;
+                break;
             case 3:
                 pet.makeSound();
-                return true;
+                break;
             case 4:
                 System.out.println("Color: " + pet.getColor());
-                return true;
+                break;
             case 5:
-                Attribute attribute1 = pet.getPrimaryAttribute();
-                System.out.println("Hunger value: " + attribute1.getCurrentValue());
-                return true;
+                System.out.println("Hunger level: " + getAttributeValue(pet.getSecondaryAttribute()));
+                break;
             case 6:
-                Attribute attribute2 = pet.getSecondaryAttribute();
-                System.out.println("Happiness value: " + attribute2.getCurrentValue());
-                return true;
+                System.out.println("Happiness level: " + getAttributeValue(pet.getPrimaryAttribute()));
+                break;
             case 7:
-                scanner.close();
                 return false;
             default:
                 System.out.println("Invalid choice. Please choose a valid option.");
-                return true;
+                break;
         }
+        return true;
+    }
+
+    private static String getAttributeValue(Attribute attribute) {
+        return attribute.getValue(attribute.getCurrentValue());
     }
     
     private static void saveState(Owner owner) {

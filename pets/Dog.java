@@ -16,7 +16,7 @@ public class Dog implements Pet, Serializable { // Implement Serializable
     public Dog() {
         this.happiness = new HappinessAttribute();
         this.hunger = new HungerAttribute();
-        this.color = Color.GRAY;
+        this.color = Color.BROWN;
     }
 
     @Override
@@ -24,6 +24,8 @@ public class Dog implements Pet, Serializable { // Implement Serializable
         System.out.println("The dog is playing.");
         happiness.incrementValue();
         hunger.incrementValue();
+        System.out.println("Happiness level increased");
+        System.out.println("Hunger level increased");
     }
 
     @Override
