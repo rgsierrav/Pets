@@ -4,9 +4,7 @@ package interfaces;
  * Interface representing a generic attribute.
  */
 public interface Attribute {
-    /**
-     * Increments the value of the attribute.
-     */
+    //Increments the value of the attribute.
     void incrementValue();
 
     /**

@@ -1,10 +1,12 @@
 package attributes;
 
 import interfaces.Attribute;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.IOException;
 
-public class HungerAttribute implements Attribute {
+public class HungerAttribute implements Attribute, Serializable {
     private int value;
     private static final Map<Integer, String> levelDescriptions = new HashMap<>();
 
@@ -13,6 +15,8 @@ public class HungerAttribute implements Attribute {
         levelDescriptions.put(1, "A little Hungry");
         levelDescriptions.put(2, "Hungry");
         levelDescriptions.put(3, "Very Hungry");
+        levelDescriptions.put(4, "Starving");
+        levelDescriptions.put(5, "Feed Me");
     }
 
     public HungerAttribute() {
@@ -40,5 +44,14 @@ public class HungerAttribute implements Attribute {
     @Override
     public Integer getCurrentValue() {
         return value;
+    }
+
+    // Implement serialization methods if necessary
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
     }
 }
