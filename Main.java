@@ -27,6 +27,7 @@ public class Main {
         Pet petToInteract = owner.getPet(selectedPetName);
         if (petToInteract != null) {
             interactWithPet(petToInteract);
+            owner.showPetDetails(selectedPetName);  // Show details after interaction
         }
     
         saveState(owner);
@@ -97,11 +98,11 @@ public class Main {
                 System.out.println("Color: " + pet.getColor());
                 return true;
             case 5:
-                Attribute attribute1 = pet.getAttribute1();
+                Attribute attribute1 = pet.getPrimaryAttribute();
                 System.out.println("Hunger value: " + attribute1.getCurrentValue());
                 return true;
             case 6:
-                Attribute attribute2 = pet.getAttribute2();
+                Attribute attribute2 = pet.getSecondaryAttribute();
                 System.out.println("Happiness value: " + attribute2.getCurrentValue());
                 return true;
             case 7:

@@ -1,32 +1,37 @@
 package pets;
 
+import java.io.IOException;
 import java.io.Serializable; // Import Serializable
 import enums.Color;
 import interfaces.Attribute;
 import interfaces.Pet;
+import attributes.HappinessAttribute;
+import attributes.HungerAttribute;
 
 public class Cat implements Pet, Serializable { // Implement Serializable
-    private int happiness;
-    private int hunger;
+    private Attribute happiness;
+    private Attribute hunger;
     private Color color;
 
     public Cat() {
-        this.happiness = 0;
-        this.hunger = 0;
+        this.happiness = new HappinessAttribute();
+        this.hunger = new HungerAttribute();
         this.color = Color.GRAY;
     }
 
     @Override
     public void play() {
         System.out.println("The cat is playing.");
-        happiness++;
-        hunger++;
+        happiness.incrementValue();
+        hunger.incrementValue();
     }
 
     @Override
     public void feed() {
         System.out.println("The cat is being fed.");
-        hunger--;
+        if (hunger.getCurrentValue() > 0) {
+            hunger.decrementValue();
+        }
     }
 
     @Override
@@ -35,22 +40,21 @@ public class Cat implements Pet, Serializable { // Implement Serializable
     }
 
     @Override
-    public Attribute getAttribute1() {
-        return new HappinessAttribute();
+    public Attribute getPrimaryAttribute() {
+        return happiness;
     }
 
     @Override
-    public Attribute getAttribute2() {
-        return new HungerAttribute();
+    public Attribute getSecondaryAttribute() {
+        return hunger;
     }
 
     @Override
     public Color getColor() {
         return color;
     }
-    
-    // Implement serialization methods
-    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+
+     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
     }
 

@@ -12,7 +12,7 @@ run:
 	java -cp . $(MAIN_CLASS)
 
 clean:
-	find . -name "*.class" -type f -delete
+	del /s /q *.class
 
 jar:
 	$(JAR) cfe my-pets.jar $(MAIN_CLASS) .

@@ -11,12 +11,32 @@ public class Owner implements Serializable {
     }
 
     public void addPet(String name, Pet pet) {
-        pets.put(name, pet);
+        if (!pets.containsKey(name)) {
+            pets.put(name, pet);
+        } else {
+            System.out.println("A pet with this name already exists.");
+        }
     }
-
+    
     public void removePet(String name) {
-        pets.remove(name);
+        if (pets.containsKey(name)) {
+            pets.remove(name);
+        } else {
+            System.out.println("No pet found with this name.");
+        }
     }
+    
+    public void showPetDetails(String name) {
+        if (pets.containsKey(name)) {
+            Pet pet = pets.get(name);
+            System.out.println("Details for " + name + ":");
+            System.out.println("Color: " + pet.getColor());
+            System.out.println("Happiness Level: " + pet.getPrimaryAttribute().getCurrentValue());
+            System.out.println("Hunger Level: " + pet.getSecondaryAttribute().getCurrentValue());
+        } else {
+            System.out.println("No pet found with this name.");
+        }
+    }    
 
     public Pet getPet(String name) {
         return pets.get(name);
@@ -32,6 +52,4 @@ public class Owner implements Serializable {
             }
         }
     }
-
-    // Additional methods as needed, e.g., to save/load pet states, etc.
 }

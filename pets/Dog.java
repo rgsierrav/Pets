@@ -1,31 +1,37 @@
-package pets; 
+package pets;
 
+import java.io.IOException;
+import java.io.Serializable; // Import Serializable
 import enums.Color;
 import interfaces.Attribute;
 import interfaces.Pet;
+import attributes.HappinessAttribute;
+import attributes.HungerAttribute;
 
-public class Dog implements Pet {
-    private int happiness; 
-    private int hunger;    
-    private Color color;   
+public class Dog implements Pet, Serializable { // Implement Serializable
+    private Attribute happiness;
+    private Attribute hunger;
+    private Color color;
 
     public Dog() {
-        this.happiness = 0; 
-        this.hunger = 0;    
-        this.color = Color.GRAY; 
+        this.happiness = new HappinessAttribute();
+        this.hunger = new HungerAttribute();
+        this.color = Color.GRAY;
     }
 
     @Override
     public void play() {
         System.out.println("The dog is playing.");
-        happiness++;
-        hunger++;
+        happiness.incrementValue();
+        hunger.incrementValue();
     }
 
     @Override
     public void feed() {
         System.out.println("The dog is being fed.");
-        hunger--;
+        if (hunger.getCurrentValue() > 0) {
+            hunger.decrementValue();
+        }
     }
 
     @Override
@@ -34,17 +40,25 @@ public class Dog implements Pet {
     }
 
     @Override
-    public Attribute getAttribute1() {
-        return new HappinessAttribute();
+    public Attribute getPrimaryAttribute() {
+        return happiness;
     }
 
     @Override
-    public Attribute getAttribute2() {
-        return new HungerAttribute();
+    public Attribute getSecondaryAttribute() {
+        return hunger;
     }
 
     @Override
     public Color getColor() {
         return color;
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
     }
 }
